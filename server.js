@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const app = require("./app");
-const { error } = require("./schema");
+const { app } = require("./app");
+//const { error } = require("./schema");
 //PhHzLrFsBNB0Jy8f
 
 const PORT = 5000;

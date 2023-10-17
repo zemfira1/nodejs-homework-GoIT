@@ -1,4 +1,4 @@
-const Contact = require("../../models/Contact");
+const {Contact} = require("../../models/mongoosSchemas");
 const { ctrlWrapper } = require("../../decorators");
 
 const getContactsList = async (req, res) => {

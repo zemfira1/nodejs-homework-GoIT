@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { handleSaveError, runValidatorsAtUpdate } = require("../models/hooks");
+const { handleSaveError, runValidatorsAtUpdate } = require("../hooks");
 
 const contactSchema = new Schema({
   name: {
@@ -26,4 +26,4 @@ contactSchema.post("findOneAndUpdate", handleSaveError);
 
 const Contact = model("contact", contactSchema);
 
-module.exports = Contact;
+module.exports = { Contact };
