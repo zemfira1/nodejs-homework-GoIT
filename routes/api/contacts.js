@@ -11,7 +11,7 @@ const {
 
 const contactsRouter = express.Router();
 
-const { isEmptyBody, isValidId } = require("../../middlewares");
+const { isEmptyBody, isValidId, authenticate } = require("../../middlewares");
 const { validateBody } = require("../../decorators");
 const {
   contactAddSchema,
@@ -20,6 +20,8 @@ const {
 
 const contactAddValidate = validateBody(contactAddSchema);
 const contactUpdateFavoriteValidate = validateBody(contactUpdateFavoriteSchema);
+
+contactsRouter.use(authenticate);
 
 contactsRouter.get("/", getContactsList);
 

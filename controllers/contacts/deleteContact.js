@@ -1,10 +1,11 @@
-const {Contact} = require("../../models/mongoosSchemas");
-const HttpError = require("../../helpers");
+const { Contact } = require("../../models/mongoosSchemas");
+const { HttpError } = require("../../helpers");
 const { ctrlWrapper } = require("../../decorators");
 
 const removeContactById = async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndDelete(id);
+  const { _id: owner } = req.user;
+  const result = await Contact.findOneAndDelete({ _id: id, owner });
 
   if (!result) {
     throw HttpError(404, `Not found`);

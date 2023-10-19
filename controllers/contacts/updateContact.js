@@ -1,11 +1,12 @@
 const { Contact } = require("../../models/mongoosSchemas");
-const HttpError = require("../../helpers");
+const { HttpError } = require("../../helpers");
 const { ctrlWrapper } = require("../../decorators");
 
 const updateContactById = async (req, res) => {
   const { id } = req.params;
+  const { _id: owner } = req.user;
 
-  const contact = await Contact.findByIdAndUpdate(id, req.body, {
+  const contact = await Contact.findOneAndUpdate({ _id: id, owner }, req.body, {
     new: true,
   });
   if (!contact) {

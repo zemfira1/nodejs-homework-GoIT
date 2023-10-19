@@ -1,11 +1,11 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-require("dotenv").config();
+const dotenv = require("dotenv");
 
 const { contactsRouter, authRouter } = require("./routes/api");
 
-//dotenv.config();
+dotenv.config();
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";

@@ -2,7 +2,8 @@ const { Contact } = require("../../models/mongoosSchemas");
 const { ctrlWrapper } = require("../../decorators");
 
 const addNewContact = async (req, res) => {
-  const newContact = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const newContact = await Contact.create({ ...req.body, owner });
   res.status(201).json(newContact);
 };
 
