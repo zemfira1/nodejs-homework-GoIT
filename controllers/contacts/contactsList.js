@@ -10,7 +10,14 @@ const getContactsList = async (req, res) => {
     skip,
     limit,
   }).populate("owner", "email");
-  res.json(list);
+
+  res.status(200);
+  res.json({
+    code: 200,
+    message: "Success",
+    quantity: list.length,
+    data: list,
+  });
 };
 
 module.exports = { getContactsList: ctrlWrapper(getContactsList) };

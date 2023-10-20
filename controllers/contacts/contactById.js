@@ -12,7 +12,8 @@ const getContactById = async (req, res) => {
     throw HttpError(404, `Not found`);
   }
 
-  res.json(contactBId);
+  res.status(200);
+  res.json({ code: 200, message: "Success", data: contactBId });
 };
 
 module.exports = { getContactById: ctrlWrapper(getContactById) };

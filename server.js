@@ -4,7 +4,6 @@ const { app } = require("./app");
 const path = require("path");
 const configPath = path.join(__dirname, ".env");
 require("dotenv").config({ path: configPath });
-//PhHzLrFsBNB0Jy8f
 
 const { PORT, DB_HOST } = process.env;
 
