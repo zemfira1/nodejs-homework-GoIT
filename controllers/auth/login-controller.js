@@ -7,7 +7,9 @@ const path = require("path");
 const configPath = path.join(__dirname, "..", "..", "env");
 require("dotenv").config({ path: configPath });
 
-const { JWT_SECRET } = process.env;
+// const { JWT_SECRET } = process.env;
+const JWT_SECRET =
+  "7GGi0Zz8T7dcLtKXIpa3RCM6Xjfe0hSA4HOeKoG4fF5uk1zD4yhjyHa2hdPZcqm5";
 
 const login = async (req, res) => {
   const { email, password } = req.body;
