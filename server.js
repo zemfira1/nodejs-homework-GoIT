@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 const { app } = require("./app");
-//const { error } = require("./schema");
+const path = require("path");
+const configPath = path.join(__dirname, "env");
+require("dotenv").config({ path: configPath });
 //PhHzLrFsBNB0Jy8f
 
-const PORT = 5000;
 const DB_HOST =
   "mongodb+srv://Zemfira:PhHzLrFsBNB0Jy8f@cluster0.hxnvwh5.mongodb.net/my-contacts?retryWrites=true&w=majority";
+
+const { PORT } = process.env;
 
 mongoose
   .connect(DB_HOST)
