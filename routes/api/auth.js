@@ -1,6 +1,6 @@
 const express = require("express");
 const { register, login, logout, current } = require("../../controllers/auth");
-const { isEmptyBody, authenticate } = require("../../middlewares");
+const { isEmptyBody, authenticate, upload } = require("../../middlewares");
 const { validateBody } = require("../../decorators");
 const {
   userRegisterSchema,
@@ -12,7 +12,13 @@ const userLoginValidate = validateBody(userLoginSchema);
 
 const authRouter = express.Router();
 
-authRouter.post("/register", isEmptyBody, userRegisterValidate, register);
+authRouter.post(
+  "/register",
+  upload.single("avatarURL"),
+  isEmptyBody,
+  userRegisterValidate,
+  register
+);
 authRouter.post("/login", isEmptyBody, userLoginValidate, login);
 authRouter.post("/logout", authenticate, logout);
 authRouter.get("/current", authenticate, current);
