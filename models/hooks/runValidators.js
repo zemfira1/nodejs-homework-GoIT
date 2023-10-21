@@ -3,4 +3,4 @@ const runValidatorsAtUpdate = function (next) {
   next();
 };
 
-module.exports = runValidatorsAtUpdate;
+module.exports = { runValidatorsAtUpdate };
