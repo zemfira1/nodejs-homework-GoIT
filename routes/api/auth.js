@@ -1,5 +1,11 @@
 const express = require("express");
-const { register, login, logout, current } = require("../../controllers/auth");
+const {
+  register,
+  login,
+  logout,
+  current,
+  avatars,
+} = require("../../controllers/auth");
 const { isEmptyBody, authenticate, upload } = require("../../middlewares");
 const { validateBody } = require("../../decorators");
 const {
@@ -22,5 +28,6 @@ authRouter.post(
 authRouter.post("/login", isEmptyBody, userLoginValidate, login);
 authRouter.post("/logout", authenticate, logout);
 authRouter.get("/current", authenticate, current);
+authRouter.patch("/avatars", upload.single("avatarURL"), authenticate, avatars);
 
 module.exports = authRouter;

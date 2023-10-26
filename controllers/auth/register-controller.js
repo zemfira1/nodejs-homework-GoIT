@@ -3,11 +3,11 @@ const { HttpError } = require("../../helpers");
 const { ctrlWrapper } = require("../../decorators");
 const bcrypt = require("bcryptjs");
 //const { fs } = require("fs");
-const path = require("path");
+//const path = require("path");
 const gravatar = require("gravatar");
 
-const avatarPath = path.resolve("public", "avatars");
-console.log(avatarPath);
+//const avatarPath = path.resolve("public", "avatars");
+//console.log(avatarPath);
 
 const register = async (req, res) => {
   // const { path: oldPath, filename } = req.file;
@@ -19,10 +19,9 @@ const register = async (req, res) => {
 
   // await fs.rename(oldPath, newPath);
 
-  const { filename } = req.file;
+  //const { filename } = req.file;
+  //const avatar = path.join("avatars", filename);
   const { email, password } = req.body;
-
-  const avatar = path.join("avatars", filename);
 
   const user = await User.findOne({ email });
   if (user) {
@@ -31,8 +30,10 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const avatarURL = gravatar.url(avatar, {
+  const avatarURL = gravatar.url(email, {
     protocol: "http",
+    d: "mp",
+    s: "200",
   });
 
   const newUser = await User.create({
@@ -41,13 +42,12 @@ const register = async (req, res) => {
     avatarURL,
   });
 
-  console.log(req.body);
-  console.log(req.file);
-
   res.status(201).json({
-    email: newUser.email,
-    subscription: newUser.subscription,
-    avatarURL,
+    user: {
+      email: newUser.email,
+      subscription: newUser.subscription,
+      avatarURL,
+    },
   });
 };
 
