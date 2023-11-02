@@ -1,26 +1,9 @@
-const mongoose = require("mongoose");
-const { connect } = require("mongoose");
-const { app } = require("./app");
+const ElasticEmail = require("@elasticemail/elasticemail-client");
 const path = require("path");
-const configPath = path.join(__dirname, ".env");
+const configPath = path.join(__dirname, "..", ".env");
 require("dotenv").config({ path: configPath });
 
-const { PORT, DB_HOST, ELASTICEMAIL_API_KEY, ELASTICEMAIL_FROM } = process.env;
-
-mongoose
-  .connect(DB_HOST)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running. Use our API on port: ${PORT}`);
-    });
-    console.log("Database connection successful");
-  })
-  .catch((error) => {
-    console.log(error.message);
-    process.exit(1);
-  });
-
-const ElasticEmail = require("@elasticemail/elasticemail-client");
+const { ELASTICEMAIL_API_KEY, ELASTICEMAIL_FROM } = process.env;
 
 const defaultClient = ElasticEmail.ApiClient.instance;
 
