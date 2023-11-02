@@ -1,2 +1,4 @@
 const { HttpError } = require("./HttpError");
-module.exports = { HttpError };
+const { sendemail } = require("./sendemail");
+
+module.exports = { HttpError, sendemail };

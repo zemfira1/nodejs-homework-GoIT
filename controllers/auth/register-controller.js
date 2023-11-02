@@ -1,26 +1,16 @@
 const { User } = require("../../models/mongoosSchemas");
-const { HttpError } = require("../../helpers");
+const { HttpError, sendemail } = require("../../helpers");
 const { ctrlWrapper } = require("../../decorators");
 const bcrypt = require("bcryptjs");
-//const { fs } = require("fs");
-//const path = require("path");
 const gravatar = require("gravatar");
+const { nanoid } = require("nanoid");
+const path = require("path");
+const configPath = path.join(__dirname, "..", "..", ".env");
+require("dotenv").config({ path: configPath });
 
-//const avatarPath = path.resolve("public", "avatars");
-//console.log(avatarPath);
+const { BASE_URL } = process.env;
 
 const register = async (req, res) => {
-  // const { path: oldPath, filename } = req.file;
-  // const newPath = path.join(avatarPath, filename);
-
-  // console.log(oldPath);
-  // console.log(filename);
-  // console.log(newPath);
-
-  // await fs.rename(oldPath, newPath);
-
-  //const { filename } = req.file;
-  //const avatar = path.join("avatars", filename);
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -29,6 +19,7 @@ const register = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
+  const verificationToken = nanoid();
 
   const avatarURL = gravatar.url(email, {
     protocol: "http",
@@ -40,7 +31,16 @@ const register = async (req, res) => {
     ...req.body,
     password: hashPassword,
     avatarURL,
+    verificationToken,
   });
+
+  const verifyEmail = {
+    to: email,
+    subject: "Verify email",
+    html: `<a target="blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click to verify email</a>`,
+  };
+
+  await sendemail(verifyEmail);
 
   res.status(201).json({
     user: {
